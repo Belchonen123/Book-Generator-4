@@ -14,6 +14,7 @@ import {
 } from "@/components/editor/chapter-editor";
 import { wordCount as countWords } from "@/lib/text/word-count";
 import { AssistPanel } from "./_components/assist-panel";
+import { ContinuityPanel } from "./_components/continuity-panel";
 
 const SAVE_DEBOUNCE_MS = 1500;
 
@@ -200,6 +201,8 @@ export default function ChapterPage() {
           setBusy={setAssisting}
           onInsert={(text) => editorRef.current?.appendText(text)}
         />
+
+        <ContinuityPanel chapterId={chapterId} />
 
         {showRevisions && <RevisionList chapterId={chapterId} />}
       </div>
