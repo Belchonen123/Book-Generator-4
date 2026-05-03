@@ -213,6 +213,14 @@ EXISTING FIELDS: {{existingJson}}
 SOURCE (book context):
 {{context}}`,
 
+  slop_scan_deepdive: `Read the chapter and flag passages that read as generic, AI-sounding, or
+overwrought. Skip generic word frequency — focus on passages that lack
+specificity, lean on cliché, or sound like marketing prose. Output JSON:
+{ "flags": [ { "excerpt": "...", "issue": "...", "suggestion": "..." } ] }.
+
+Chapter:
+{{chapter}}`,
+
   check_consistency: `Compare the new chapter against the codex and prior chapter summaries.
 Report concrete contradictions only. For each: title, severity (info|warn|error),
 and detail. JSON array. If none, return [].
