@@ -138,6 +138,7 @@ const OWNER_TABLES = [
   "slopScans",
   "audioJobs",
   "audioExports",
+  "coverVariants",
   "bookExports",
   "series",
   "seriesCodexEntries",

@@ -150,6 +150,7 @@ async function deleteBookCascade(
     "audioJobs",
     "audioExports",
     "bookExports",
+    "coverVariants",
   ] as const;
 
   for (const table of tables) {

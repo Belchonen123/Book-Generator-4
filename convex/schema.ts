@@ -395,6 +395,19 @@ export default defineSchema({
     .index("by_status", ["status"])
     .index("by_user", ["userId"]),
 
+  coverVariants: defineTable({
+    bookId: v.id("books"),
+    userId: v.id("users"),
+    storageId: v.id("_storage"),
+    source: v.union(v.literal("ai"), v.literal("upload")),
+    prompt: v.optional(v.string()),
+    width: v.optional(v.number()),
+    height: v.optional(v.number()),
+    createdAt: v.number(),
+  })
+    .index("by_book", ["bookId", "createdAt"])
+    .index("by_user", ["userId"]),
+
   audioExports: defineTable({
     bookId: v.id("books"),
     userId: v.id("users"),
