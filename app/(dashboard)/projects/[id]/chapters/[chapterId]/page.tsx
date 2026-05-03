@@ -15,6 +15,7 @@ import {
 import { wordCount as countWords } from "@/lib/text/word-count";
 import { AssistPanel } from "./_components/assist-panel";
 import { ContinuityPanel } from "./_components/continuity-panel";
+import { ChatPanel } from "./_components/chat-panel";
 
 const SAVE_DEBOUNCE_MS = 1500;
 
@@ -203,6 +204,8 @@ export default function ChapterPage() {
         />
 
         <ContinuityPanel chapterId={chapterId} />
+
+        <ChatPanel bookId={bookId} chapterId={chapterId} />
 
         {showRevisions && <RevisionList chapterId={chapterId} />}
       </div>
