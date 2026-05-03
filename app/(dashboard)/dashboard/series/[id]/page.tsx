@@ -9,6 +9,7 @@ import type { Id } from "@/convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SeriesTabs } from "./_components/series-tabs";
 
 const STATUSES = ["planning", "active", "complete", "abandoned"] as const;
 
@@ -227,6 +228,8 @@ export default function SeriesDetailPage() {
           </div>
         )}
       </section>
+
+      <SeriesTabs seriesId={seriesId} />
     </main>
   );
 }
