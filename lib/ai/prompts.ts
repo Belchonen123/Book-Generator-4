@@ -30,6 +30,20 @@ Tone: {{tone}}
 
 Respond with JSON only.`,
 
+  regenerate_idea_field: `You are an editorial assistant. Regenerate the {{field}} for a book.
+Existing context (other fields): {{existingJson}}
+Genre: {{genre}}
+Tone: {{tone}}
+
+Return only the new value as plain text, no JSON, no quotes.`,
+
+  generate_subtitle: `Write a single concise subtitle for the following book. No quotes, no
+explanation — just the subtitle.
+
+Title: {{title}}
+Genre: {{genre}}
+Premise: {{premise}}`,
+
   generate_outline: `You are an outliner. Produce {{sectionCount}} chapter-level sections for the following book.
 Title: {{title}}
 Genre: {{genre}}
