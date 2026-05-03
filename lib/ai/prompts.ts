@@ -132,6 +132,14 @@ Beat: {{beat}}
 Surrounding context: {{context}}
 Style guidance: {{styleGuidance}}`,
 
+  polish_replacements: `The author just performed a global find/replace ("{{needle}}" -> "{{replacement}}").
+Lightly polish the chapter so the substitutions read naturally. DO NOT change
+plot, dialogue meaning, or character voice. Output ONLY the polished prose,
+paragraphs intact.
+
+Chapter:
+{{chapter}}`,
+
   rewrite_transitions: `Smooth the transition between two consecutive chapters. Edit ONLY the
 last paragraph of A and the first paragraph of B so the handoff feels
 continuous. Return JSON: {"endA": "...", "startB": "..."}.

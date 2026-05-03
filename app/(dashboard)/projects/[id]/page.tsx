@@ -5,19 +5,20 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
+import { FindReplace } from "./_components/find-replace";
 
 export default function ProjectOverviewPage() {
   const params = useParams<{ id: string }>();
-  const book = useQuery(api.books.get, { id: params.id as Id<"books"> });
+  const bookId = params.id as Id<"books">;
+  const book = useQuery(api.books.get, { id: bookId });
 
   if (book === undefined) return <p className="text-muted-foreground">Loading…</p>;
+  if (book === null) return <p>Not found</p>;
 
   return (
-    <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">
-        Project shell. Each tab fills in over the next phases.
-      </p>
+    <div className="space-y-6">
       <NextStep status={book.status} bookId={params.id} />
+      <FindReplace bookId={bookId} />
     </div>
   );
 }

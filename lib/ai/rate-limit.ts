@@ -12,6 +12,7 @@ export const LIMITS: Record<AiTask | "generate_cover" | "voice_to_chapter", numb
   expand_outline: 30,
   scene_beat: 60,
   rewrite_transitions: 40,
+  polish_replacements: 20,
   chapter_assist: 60,
   inline_assist: 100,
   inline_command: 100,

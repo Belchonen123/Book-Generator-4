@@ -26,6 +26,7 @@ export type AiTask =
   | "expand_outline"
   | "scene_beat"
   | "rewrite_transitions"
+  | "polish_replacements"
   // Chapter assists
   | "chapter_assist"
   | "inline_assist"
@@ -74,6 +75,7 @@ export const MODEL_ROUTING: Record<AiTask, ModelChoice[]> = {
     { provider: "openai", model: MODELS.openai.gpt4o },
   ],
   rewrite_transitions: [{ provider: "anthropic", model: MODELS.anthropic.sonnet }],
+  polish_replacements: [{ provider: "openai", model: MODELS.openai.gpt4oMini }],
   chapter_assist: [{ provider: "anthropic", model: MODELS.anthropic.sonnet }],
   inline_assist: [{ provider: "anthropic", model: MODELS.anthropic.haiku }],
   inline_command: [{ provider: "anthropic", model: MODELS.anthropic.sonnet }],
