@@ -1,16 +1,12 @@
 import { v } from "convex/values";
-import { mutation, query, type MutationCtx, type QueryCtx } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import { requireUserId, type AnyCtx } from "./lib/auth";
 import type { Doc, Id } from "./_generated/dataModel";
-
-export async function requireUserId(ctx: QueryCtx | MutationCtx): Promise<Id<"users">> {
-  const userId = await getAuthUserId(ctx);
-  if (!userId) throw new Error("Not authenticated");
-  return userId;
-}
+import type { MutationCtx } from "./_generated/server";
 
 async function profileForUser(
-  ctx: QueryCtx | MutationCtx,
+  ctx: AnyCtx,
   userId: Id<"users">
 ): Promise<Doc<"profiles"> | null> {
   return await ctx.db
@@ -121,8 +117,58 @@ export const deleteAccount = mutation({
   },
 });
 
+// All user-owned tables. Adding a new owner table? Add it here and ensure it
+// has a `by_user` index. Storage objects (covers, audio, exports) are deleted
+// as their parent rows are removed below.
+const OWNER_TABLES = [
+  "books",
+  "outlineSections",
+  "chapters",
+  "chapterRevisions",
+  "styleExamples",
+  "characterBibles",
+  "codexEntries",
+  "codexRelations",
+  "continuityWarnings",
+  "chatThreads",
+  "chatMessages",
+  "brainstormSessions",
+  "brainstormItems",
+  "pacingAnalyses",
+  "slopScans",
+  "audioJobs",
+  "audioExports",
+  "bookExports",
+  "series",
+  "seriesCodexEntries",
+  "seriesArcs",
+  "seriesArcBeats",
+  "analyticsEvents",
+  "customPrompts",
+  "couponRedemptions",
+  "rateLimitBuckets",
+  "profiles",
+] as const;
+
 async function purgeUserData(ctx: MutationCtx, userId: Id<"users">) {
-  const profile = await profileForUser(ctx, userId);
-  if (profile) await ctx.db.delete(profile._id);
-  // Future phases extend here: books, chapters, codex, series, storage, etc.
+  for (const table of OWNER_TABLES) {
+    const rows = await ctx.db
+      .query(table)
+      // @ts-expect-error — every owner table declares this index
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .collect();
+    for (const row of rows) {
+      // Delete any storage attached to the row.
+      const storageId = (row as { storageId?: Id<"_storage">; coverStorageId?: Id<"_storage"> })
+        .storageId ?? (row as { coverStorageId?: Id<"_storage"> }).coverStorageId;
+      if (storageId) {
+        try {
+          await ctx.storage.delete(storageId);
+        } catch {
+          /* already gone */
+        }
+      }
+      await ctx.db.delete(row._id);
+    }
+  }
 }
