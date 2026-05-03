@@ -11,9 +11,13 @@
     "convex": "convex dev"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
     "@auth/core": "^0.37.0",
     "@convex-dev/auth": "^0.0.80",
     "@radix-ui/react-slot": "^1.1.0",
+    "@upstash/ratelimit": "^2.0.5",
+    "@upstash/redis": "^1.34.3",
+    "openai": "^4.73.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "convex": "^1.17.0",
