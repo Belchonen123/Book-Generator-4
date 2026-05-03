@@ -21,6 +21,8 @@ export const LIMITS: Record<AiTask | "generate_cover" | "voice_to_chapter", numb
   regenerate_idea_field: 30,
   generate_subtitle: 60,
   generate_book_metadata: 30,
+  // model routing already covers metadata + author + back cover via the
+  // task names declared in models.ts
   generate_about_author: 30,
   generate_back_cover: 30,
   generate_outline: 30,
