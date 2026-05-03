@@ -44,6 +44,7 @@ export type AiTask =
   | "extract_codex_seeds"
   | "suggest_codex_entry"
   | "check_consistency"
+  | "generate_character_bible"
   // Chat / brainstorm
   | "chat"
   | "brainstorm"
@@ -91,6 +92,7 @@ export const MODEL_ROUTING: Record<AiTask, ModelChoice[]> = {
   extract_codex_seeds: [{ provider: "openai", model: MODELS.openai.gpt4oMini }],
   suggest_codex_entry: [{ provider: "openai", model: MODELS.openai.gpt4oMini }],
   check_consistency: [{ provider: "openai", model: MODELS.openai.gpt4oMini }],
+  generate_character_bible: [{ provider: "openai", model: MODELS.openai.gpt4o }],
 
   // Conversational.
   chat: [{ provider: "anthropic", model: MODELS.anthropic.sonnet }],

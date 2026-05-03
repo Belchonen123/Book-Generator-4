@@ -52,8 +52,28 @@ Premise: {{premise}}
 Main character: {{mainCharacter}}
 Central conflict: {{centralConflict}}
 
-For each section output: order (1-indexed), title, summary (3-5 sentences),
-notes (optional). Return a JSON array.`,
+For each section output: title, summary (3-5 sentences), notes (optional).
+Return a JSON array, ordered.`,
+
+  expand_outline: `Deepen the following outline section. Keep the same beat structure but
+expand the summary into 6-10 sentences with concrete sensory and dramatic
+detail. Return JSON: { "summary": "...", "notes": "..." }.
+
+Title: {{title}}
+Existing summary: {{summary}}
+Book context: {{bookContext}}`,
+
+  generate_character_bible: `Build a character bible for the following book in concise Markdown.
+Group by Major / Supporting / Minor. For each named character: name, role,
+voice/manner, primary motivation, key relationships, an arc note. Pull names
+and roles from the outline.
+
+Title: {{title}}
+Genre: {{genre}}
+Premise: {{premise}}
+
+Outline:
+{{outline}}`,
 
   generate_chapter: `You are writing chapter {{chapterNumber}} of "{{bookTitle}}" — a {{genre}} novel.
 

@@ -33,6 +33,7 @@ export const LIMITS: Record<AiTask | "generate_cover" | "voice_to_chapter", numb
   suggest_series_arc: 40,
   suggest_series_beat: 50,
   generate_cover: 10,
+  generate_character_bible: 10,
 };
 
 let redis: Redis | null = null;
