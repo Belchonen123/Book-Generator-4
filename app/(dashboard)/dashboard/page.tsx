@@ -1,13 +1,16 @@
 import { OnboardingPrompt } from "./_components/onboarding-prompt";
+import { BookList } from "./_components/book-list";
+import { CreateBookButton } from "./_components/create-book-button";
 
 export default function DashboardPage() {
   return (
     <main className="container mx-auto flex flex-col gap-6 py-10">
-      <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold tracking-tight">Your books</h1>
+        <CreateBookButton />
+      </div>
       <OnboardingPrompt />
-      <p className="text-muted-foreground">
-        Book list lands in Phase 5.
-      </p>
+      <BookList />
     </main>
   );
 }
