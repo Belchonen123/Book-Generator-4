@@ -97,6 +97,60 @@ Write the chapter as continuous prose. Do not output a chapter heading or
 section breaks unless they appear in the source style. Aim for {{targetWords}}
 words.`,
 
+  chapter_assist: `Apply the operation "{{op}}" to the following chapter prose. Preserve
+the storyline and POV exactly. Output ONLY the rewritten prose, paragraph
+breaks intact, no commentary.
+
+Op detail: {{opDetail}}
+
+Style guidance: {{styleGuidance}}
+
+Chapter:
+{{chapter}}`,
+
+  inline_assist: `Apply "{{op}}" to the selected passage. Output only the rewritten
+passage, no quotes, no commentary.
+
+Selection:
+{{selection}}
+
+Surrounding context (do not output):
+{{context}}`,
+
+  inline_command: `Produce {{count}} distinct alternative rewrites for the selected passage.
+Each rewrite should preserve meaning but vary tone or rhythm. Return a JSON
+array of strings.
+
+Instruction: {{instruction}}
+Selection: {{selection}}`,
+
+  scene_beat: `Write the scene described by the beat below as continuous prose, in the
+voice of "{{bookTitle}}" ({{genre}}). Aim for {{targetWords}} words. Output
+prose only.
+
+Beat: {{beat}}
+Surrounding context: {{context}}
+Style guidance: {{styleGuidance}}`,
+
+  rewrite_transitions: `Smooth the transition between two consecutive chapters. Edit ONLY the
+last paragraph of A and the first paragraph of B so the handoff feels
+continuous. Return JSON: {"endA": "...", "startB": "..."}.
+
+Chapter A end:
+{{endA}}
+
+Chapter B start:
+{{startB}}`,
+
+  voice_to_chapter: `The author dictated the following voice memo describing a scene or
+chapter. Turn it into polished chapter prose for "{{bookTitle}}" ({{genre}}).
+Aim for {{targetWords}} words. Output prose only.
+
+Memo transcript:
+{{transcript}}
+
+Style guidance: {{styleGuidance}}`,
+
   chat: `You are an editorial collaborator embedded in chapter {{chapterNumber}} of
 "{{bookTitle}}". You can see the chapter content and any codex entries the
 author mentions with @-tags. Be concrete, brief, and direct.`,

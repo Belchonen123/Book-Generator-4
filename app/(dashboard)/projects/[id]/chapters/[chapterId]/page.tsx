@@ -12,8 +12,8 @@ import {
   ChapterEditor,
   type ChapterEditorHandle,
 } from "@/components/editor/chapter-editor";
-import { tiptapToPlain } from "@/lib/text/tiptap";
 import { wordCount as countWords } from "@/lib/text/word-count";
+import { AssistPanel } from "./_components/assist-panel";
 
 const SAVE_DEBOUNCE_MS = 1500;
 
@@ -35,16 +35,27 @@ export default function ChapterPage() {
   const dirtyRef = useRef(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastLoadedId = useRef<string | null>(null);
+  const lastSeenUpdatedAt = useRef<number>(0);
+  const [assisting, setAssisting] = useState(false);
 
   useEffect(() => {
     if (!chapter) return;
     setTitle(chapter.title);
-    if (lastLoadedId.current !== chapter._id) {
+    const isNewChapter = lastLoadedId.current !== chapter._id;
+    // Reload editor on chapter switch OR when server content changed via an
+    // assist/generation that we didn't initiate locally.
+    const externalUpdate =
+      !isNewChapter &&
+      !dirtyRef.current &&
+      !generating &&
+      chapter.updatedAt > lastSeenUpdatedAt.current;
+    if (isNewChapter || externalUpdate) {
       editorRef.current?.setContent(chapter.content || null, chapter.plainText);
       lastLoadedId.current = chapter._id;
+      lastSeenUpdatedAt.current = chapter.updatedAt;
       dirtyRef.current = false;
     }
-  }, [chapter]);
+  }, [chapter, generating]);
 
   useEffect(() => {
     return () => {
@@ -66,6 +77,8 @@ export default function ChapterPage() {
         plainText: plain,
         wordCount: countWords(plain),
       });
+      // Mark our save as seen so the reactive query won't trigger a reload.
+      lastSeenUpdatedAt.current = Date.now();
     }, SAVE_DEBOUNCE_MS);
   }
 
@@ -173,11 +186,19 @@ export default function ChapterPage() {
         <ChapterEditor
           handleRef={editorRef}
           initialJson={chapter.content || null}
-          editable={!generating && chapter.status !== "generating"}
+          editable={!generating && !assisting && chapter.status !== "generating"}
           onChange={() => {
             dirtyRef.current = true;
             scheduleSave();
           }}
+        />
+
+        <AssistPanel
+          bookId={bookId}
+          chapterId={chapterId}
+          busy={assisting}
+          setBusy={setAssisting}
+          onInsert={(text) => editorRef.current?.appendText(text)}
         />
 
         {showRevisions && <RevisionList chapterId={chapterId} />}
