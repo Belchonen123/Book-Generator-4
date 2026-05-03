@@ -16,6 +16,7 @@ const TABS: Array<{ slug: string; label: string }> = [
   { slug: "brainstorm", label: "Brainstorm" },
   { slug: "pacing", label: "Pacing" },
   { slug: "cover", label: "Cover" },
+  { slug: "audio", label: "Audio" },
   { slug: "export", label: "Export" },
 ];
 
