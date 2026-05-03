@@ -17,6 +17,7 @@ export default function DashboardLayout({
           </Link>
           <nav className="flex items-center gap-4 text-sm">
             <Link href="/dashboard" className="hover:underline">Dashboard</Link>
+            <Link href="/dashboard/series" className="hover:underline">Series</Link>
             <Link href="/profile" className="hover:underline">Profile</Link>
             <Link href="/settings" className="hover:underline">Settings</Link>
             <SignOutButton />
