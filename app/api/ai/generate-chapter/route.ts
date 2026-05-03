@@ -50,6 +50,27 @@ export async function POST(req: Request) {
   const outlineSection = sections.find((s) => s.order === chapter.order);
   const priorChapter = sections.find((s) => s.order === chapter.order - 1);
 
+  // Pull codex entries that should accompany this chapter (always-scope +
+  // any match-scope entry whose name appears in the outline summary).
+  const codexHaystack = [
+    outlineSection?.title ?? "",
+    outlineSection?.summary ?? "",
+    chapter.title,
+  ].join(" ");
+  const codex = await fetchQuery(
+    api.codex.contextForGeneration,
+    { bookId: chapter.bookId, haystack: codexHaystack },
+    { token: auth.token }
+  );
+  const codexContext = codex
+    .map(
+      (e) =>
+        `- ${e.type.toUpperCase()} ${e.name}${
+          e.summary ? `: ${e.summary}` : ""
+        }`
+    )
+    .join("\n");
+
   const prompt = await resolvePromptForRoute(
     auth.token,
     "generate_chapter",
@@ -66,7 +87,7 @@ export async function POST(req: Request) {
         .join("\n\n"),
       outlineTitle: outlineSection?.title ?? chapter.title,
       outlineSummary: outlineSection?.summary ?? "",
-      codexContext: "",
+      codexContext,
       priorChapterSummary: priorChapter?.summary ?? "",
       targetWords,
     },

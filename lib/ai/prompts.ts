@@ -167,6 +167,28 @@ author mentions with @-tags. Be concrete, brief, and direct.`,
 will ask for a list of ideas (character names, plot twists, scenes, etc.).
 Produce {{count}} concrete options. One per line.`,
 
+  extract_codex_seeds: `Read the chapter and extract codex entries the author should track. Find
+characters (named people), locations (named places), objects (significant
+items), factions (groups), lore (world rules / history). For each, output
+{ "type": "...", "name": "...", "summary": "1-2 sentences" }. Skip generic
+descriptions and one-off mentions. Return a JSON array.
+
+Chapter:
+{{chapter}}`,
+
+  suggest_codex_entry: `Fill in the codex entry below. Output a JSON object whose keys are the
+field names listed under SCHEMA, with concise concrete values. If a value
+isn't supported by the source, omit the key.
+
+SCHEMA: {{schema}}
+
+NAME: {{name}}
+TYPE: {{type}}
+EXISTING FIELDS: {{existingJson}}
+
+SOURCE (book context):
+{{context}}`,
+
   check_consistency: `Compare the new chapter against the codex and prior chapter summaries.
 Report concrete contradictions only. For each: title, severity (info|warn|error),
 and detail. JSON array. If none, return [].
