@@ -54,7 +54,7 @@ export default function OutlinePage() {
         body: JSON.stringify({ bookId }),
       });
       if (!res.ok) throw new Error(await res.text());
-      router.push(`/projects/${bookId}`);
+      router.push(`/projects/${bookId}/chapters`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed");
       setApproving(false);
