@@ -167,6 +167,30 @@ author mentions with @-tags. Be concrete, brief, and direct.`,
 will ask for a list of ideas (character names, plot twists, scenes, etc.).
 Produce {{count}} concrete options. One per line.`,
 
+  analyze_beats: `Analyze the pacing of the following book. Identify scene-level beats per
+chapter and rate each on tension (0-10) and momentum (0-10). Output JSON:
+{
+  "perChapter": [
+    {
+      "chapter": <order>,
+      "title": "...",
+      "wordCount": <int>,
+      "beats": [
+        { "label": "...", "tension": <0-10>, "momentum": <0-10>, "summary": "..." }
+      ],
+      "avgTension": <number>,
+      "avgMomentum": <number>
+    }
+  ],
+  "overall": {
+    "shape": "rising|episodic|flat|...",
+    "warnings": ["..."]
+  }
+}
+
+Book:
+{{book}}`,
+
   extract_codex_seeds: `Read the chapter and extract codex entries the author should track. Find
 characters (named people), locations (named places), objects (significant
 items), factions (groups), lore (world rules / history). For each, output
